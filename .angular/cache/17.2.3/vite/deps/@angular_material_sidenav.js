@@ -18,17 +18,17 @@ import {
   hasModifierKey,
   isDataSource,
   supportsScrollBehavior
-} from "./chunk-D5CHBKVJ.js";
+} from "./chunk-WJQ63HP4.js";
 import {
   animate,
   state,
   style,
   transition,
   trigger
-} from "./chunk-7PCK6K7U.js";
+} from "./chunk-G2GJY7JQ.js";
 import {
   DOCUMENT
-} from "./chunk-64VKBO5N.js";
+} from "./chunk-XEVOPQUP.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -115,8 +115,7 @@ import {
   ɵɵsyntheticHostProperty,
   ɵɵtemplate,
   ɵɵviewQuery
-} from "./chunk-XRCV52SI.js";
-import "./chunk-QOHD3WUR.js";
+} from "./chunk-5XTNKEWP.js";
 
 // node_modules/@angular/cdk/fesm2022/scrolling.mjs
 var _c0 = ["contentWrapper"];
