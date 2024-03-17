@@ -1,5 +1,17 @@
 import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "./chunk-G2GJY7JQ.js";
+import {
   ArrayDataSource,
+  _RecycleViewRepeaterStrategy,
+  _VIEW_REPEATER_STRATEGY,
+  isDataSource
+} from "./chunk-OUN4DANU.js";
+import {
   BidiModule,
   Directionality,
   ESCAPE,
@@ -9,23 +21,13 @@ import {
   MatCommonModule,
   Platform,
   RtlScrollAxisType,
-  _RecycleViewRepeaterStrategy,
-  _VIEW_REPEATER_STRATEGY,
   coerceBooleanProperty,
   coerceElement,
   coerceNumberProperty,
   getRtlScrollAxisType,
   hasModifierKey,
-  isDataSource,
   supportsScrollBehavior
-} from "./chunk-WJQ63HP4.js";
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "./chunk-G2GJY7JQ.js";
+} from "./chunk-HFWVBEHK.js";
 import {
   DOCUMENT
 } from "./chunk-XEVOPQUP.js";

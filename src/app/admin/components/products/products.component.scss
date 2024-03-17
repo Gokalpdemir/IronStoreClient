@@ -1,0 +1,21 @@
+.product-create {
+    width: 98%;
+    height: 96%;
+    margin: 10px;
+    border: 2px solid #555;
+    border-radius: 10px;
+  }
+  mat-drawer-container {
+    background-color: #f2f2f2; /* Drawer container arka plan rengi */
+  }
+  
+  mat-drawer {
+    width: 300px; /* Drawer genişliği */
+    height: 100%;
+    background-color: #fff; /* Drawer arka plan rengi */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Gölgelendirme */
+  }
+  
+  .mat-drawer-content {
+    padding: 20px; /* İçerik alanı iç boşluğu */
+  }

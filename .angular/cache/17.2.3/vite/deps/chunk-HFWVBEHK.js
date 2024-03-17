@@ -10,7 +10,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
-  ConnectableObservable,
   Directive,
   ElementRef,
   EventEmitter,
@@ -41,7 +40,6 @@ import {
   distinctUntilChanged,
   filter,
   inject,
-  isObservable,
   map,
   of,
   setClassMetadata,
@@ -81,23 +79,6 @@ import {
   ɵɵtextInterpolate1,
   ɵɵviewQuery
 } from "./chunk-5XTNKEWP.js";
-
-// node_modules/@angular/cdk/fesm2022/coercion.mjs
-function coerceBooleanProperty(value) {
-  return value != null && `${value}` !== "false";
-}
-function coerceNumberProperty(value, fallbackValue = 0) {
-  return _isNumberValue(value) ? Number(value) : fallbackValue;
-}
-function _isNumberValue(value) {
-  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
-}
-function coerceArray(value) {
-  return Array.isArray(value) ? value : [value];
-}
-function coerceElement(elementOrRef) {
-  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
-}
 
 // node_modules/@angular/cdk/fesm2022/platform.mjs
 var hasV8BreakIterator;
@@ -159,6 +140,50 @@ var PlatformModule = _PlatformModule;
     args: [{}]
   }], null, null);
 })();
+var supportedInputTypes;
+var candidateInputTypes = [
+  // `color` must come first. Chrome 56 shows a warning if we change the type to `color` after
+  // first changing it to something else:
+  // The specified value "" does not conform to the required format.
+  // The format is "#rrggbb" where rr, gg, bb are two-digit hexadecimal numbers.
+  "color",
+  "button",
+  "checkbox",
+  "date",
+  "datetime-local",
+  "email",
+  "file",
+  "hidden",
+  "image",
+  "month",
+  "number",
+  "password",
+  "radio",
+  "range",
+  "reset",
+  "search",
+  "submit",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week"
+];
+function getSupportedInputTypes() {
+  if (supportedInputTypes) {
+    return supportedInputTypes;
+  }
+  if (typeof document !== "object" || !document) {
+    supportedInputTypes = new Set(candidateInputTypes);
+    return supportedInputTypes;
+  }
+  let featureTestInput = document.createElement("input");
+  supportedInputTypes = new Set(candidateInputTypes.filter((value) => {
+    featureTestInput.setAttribute("type", value);
+    return featureTestInput.type === value;
+  }));
+  return supportedInputTypes;
+}
 var supportsPassiveEvents;
 function supportsPassiveEventListeners() {
   if (supportsPassiveEvents == null && typeof window !== "undefined") {
@@ -272,521 +297,6 @@ function _isTestEnvironment() {
   );
 }
 
-// node_modules/@angular/cdk/fesm2022/bidi.mjs
-var DIR_DOCUMENT = new InjectionToken("cdk-dir-doc", {
-  providedIn: "root",
-  factory: DIR_DOCUMENT_FACTORY
-});
-function DIR_DOCUMENT_FACTORY() {
-  return inject(DOCUMENT);
-}
-var RTL_LOCALE_PATTERN = /^(ar|ckb|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_](Adlm|Arab|Hebr|Nkoo|Rohg|Thaa))(?!.*[-_](Latn|Cyrl)($|-|_))($|-|_)/i;
-function _resolveDirectionality(rawValue) {
-  const value = rawValue?.toLowerCase() || "";
-  if (value === "auto" && typeof navigator !== "undefined" && navigator?.language) {
-    return RTL_LOCALE_PATTERN.test(navigator.language) ? "rtl" : "ltr";
-  }
-  return value === "rtl" ? "rtl" : "ltr";
-}
-var _Directionality = class _Directionality {
-  constructor(_document) {
-    this.value = "ltr";
-    this.change = new EventEmitter();
-    if (_document) {
-      const bodyDir = _document.body ? _document.body.dir : null;
-      const htmlDir = _document.documentElement ? _document.documentElement.dir : null;
-      this.value = _resolveDirectionality(bodyDir || htmlDir || "ltr");
-    }
-  }
-  ngOnDestroy() {
-    this.change.complete();
-  }
-};
-_Directionality.ɵfac = function Directionality_Factory(t) {
-  return new (t || _Directionality)(ɵɵinject(DIR_DOCUMENT, 8));
-};
-_Directionality.ɵprov = ɵɵdefineInjectable({
-  token: _Directionality,
-  factory: _Directionality.ɵfac,
-  providedIn: "root"
-});
-var Directionality = _Directionality;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Directionality, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{
-    type: void 0,
-    decorators: [{
-      type: Optional
-    }, {
-      type: Inject,
-      args: [DIR_DOCUMENT]
-    }]
-  }], null);
-})();
-var _Dir = class _Dir {
-  constructor() {
-    this._dir = "ltr";
-    this._isInitialized = false;
-    this.change = new EventEmitter();
-  }
-  /** @docs-private */
-  get dir() {
-    return this._dir;
-  }
-  set dir(value) {
-    const previousValue = this._dir;
-    this._dir = _resolveDirectionality(value);
-    this._rawDir = value;
-    if (previousValue !== this._dir && this._isInitialized) {
-      this.change.emit(this._dir);
-    }
-  }
-  /** Current layout direction of the element. */
-  get value() {
-    return this.dir;
-  }
-  /** Initialize once default value has been set. */
-  ngAfterContentInit() {
-    this._isInitialized = true;
-  }
-  ngOnDestroy() {
-    this.change.complete();
-  }
-};
-_Dir.ɵfac = function Dir_Factory(t) {
-  return new (t || _Dir)();
-};
-_Dir.ɵdir = ɵɵdefineDirective({
-  type: _Dir,
-  selectors: [["", "dir", ""]],
-  hostVars: 1,
-  hostBindings: function Dir_HostBindings(rf, ctx) {
-    if (rf & 2) {
-      ɵɵattribute("dir", ctx._rawDir);
-    }
-  },
-  inputs: {
-    dir: "dir"
-  },
-  outputs: {
-    change: "dirChange"
-  },
-  exportAs: ["dir"],
-  standalone: true,
-  features: [ɵɵProvidersFeature([{
-    provide: Directionality,
-    useExisting: _Dir
-  }])]
-});
-var Dir = _Dir;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Dir, [{
-    type: Directive,
-    args: [{
-      selector: "[dir]",
-      providers: [{
-        provide: Directionality,
-        useExisting: Dir
-      }],
-      host: {
-        "[attr.dir]": "_rawDir"
-      },
-      exportAs: "dir",
-      standalone: true
-    }]
-  }], null, {
-    change: [{
-      type: Output,
-      args: ["dirChange"]
-    }],
-    dir: [{
-      type: Input
-    }]
-  });
-})();
-var _BidiModule = class _BidiModule {
-};
-_BidiModule.ɵfac = function BidiModule_Factory(t) {
-  return new (t || _BidiModule)();
-};
-_BidiModule.ɵmod = ɵɵdefineNgModule({
-  type: _BidiModule,
-  imports: [Dir],
-  exports: [Dir]
-});
-_BidiModule.ɵinj = ɵɵdefineInjector({});
-var BidiModule = _BidiModule;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BidiModule, [{
-    type: NgModule,
-    args: [{
-      imports: [Dir],
-      exports: [Dir]
-    }]
-  }], null, null);
-})();
-
-// node_modules/@angular/cdk/fesm2022/collections.mjs
-var DataSource = class {
-};
-function isDataSource(value) {
-  return value && typeof value.connect === "function" && !(value instanceof ConnectableObservable);
-}
-var ArrayDataSource = class extends DataSource {
-  constructor(_data) {
-    super();
-    this._data = _data;
-  }
-  connect() {
-    return isObservable(this._data) ? this._data : of(this._data);
-  }
-  disconnect() {
-  }
-};
-var _ViewRepeaterOperation;
-(function(_ViewRepeaterOperation2) {
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REPLACED"] = 0] = "REPLACED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["INSERTED"] = 1] = "INSERTED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["MOVED"] = 2] = "MOVED";
-  _ViewRepeaterOperation2[_ViewRepeaterOperation2["REMOVED"] = 3] = "REMOVED";
-})(_ViewRepeaterOperation || (_ViewRepeaterOperation = {}));
-var _VIEW_REPEATER_STRATEGY = new InjectionToken("_ViewRepeater");
-var _RecycleViewRepeaterStrategy = class {
-  constructor() {
-    this.viewCacheSize = 20;
-    this._viewCache = [];
-  }
-  /** Apply changes to the DOM. */
-  applyChanges(changes, viewContainerRef, itemContextFactory, itemValueResolver, itemViewChanged) {
-    changes.forEachOperation((record, adjustedPreviousIndex, currentIndex) => {
-      let view;
-      let operation;
-      if (record.previousIndex == null) {
-        const viewArgsFactory = () => itemContextFactory(record, adjustedPreviousIndex, currentIndex);
-        view = this._insertView(viewArgsFactory, currentIndex, viewContainerRef, itemValueResolver(record));
-        operation = view ? _ViewRepeaterOperation.INSERTED : _ViewRepeaterOperation.REPLACED;
-      } else if (currentIndex == null) {
-        this._detachAndCacheView(adjustedPreviousIndex, viewContainerRef);
-        operation = _ViewRepeaterOperation.REMOVED;
-      } else {
-        view = this._moveView(adjustedPreviousIndex, currentIndex, viewContainerRef, itemValueResolver(record));
-        operation = _ViewRepeaterOperation.MOVED;
-      }
-      if (itemViewChanged) {
-        itemViewChanged({
-          context: view?.context,
-          operation,
-          record
-        });
-      }
-    });
-  }
-  detach() {
-    for (const view of this._viewCache) {
-      view.destroy();
-    }
-    this._viewCache = [];
-  }
-  /**
-   * Inserts a view for a new item, either from the cache or by creating a new
-   * one. Returns `undefined` if the item was inserted into a cached view.
-   */
-  _insertView(viewArgsFactory, currentIndex, viewContainerRef, value) {
-    const cachedView = this._insertViewFromCache(currentIndex, viewContainerRef);
-    if (cachedView) {
-      cachedView.context.$implicit = value;
-      return void 0;
-    }
-    const viewArgs = viewArgsFactory();
-    return viewContainerRef.createEmbeddedView(viewArgs.templateRef, viewArgs.context, viewArgs.index);
-  }
-  /** Detaches the view at the given index and inserts into the view cache. */
-  _detachAndCacheView(index, viewContainerRef) {
-    const detachedView = viewContainerRef.detach(index);
-    this._maybeCacheView(detachedView, viewContainerRef);
-  }
-  /** Moves view at the previous index to the current index. */
-  _moveView(adjustedPreviousIndex, currentIndex, viewContainerRef, value) {
-    const view = viewContainerRef.get(adjustedPreviousIndex);
-    viewContainerRef.move(view, currentIndex);
-    view.context.$implicit = value;
-    return view;
-  }
-  /**
-   * Cache the given detached view. If the cache is full, the view will be
-   * destroyed.
-   */
-  _maybeCacheView(view, viewContainerRef) {
-    if (this._viewCache.length < this.viewCacheSize) {
-      this._viewCache.push(view);
-    } else {
-      const index = viewContainerRef.indexOf(view);
-      if (index === -1) {
-        view.destroy();
-      } else {
-        viewContainerRef.remove(index);
-      }
-    }
-  }
-  /** Inserts a recycled view from the cache at the given index. */
-  _insertViewFromCache(index, viewContainerRef) {
-    const cachedView = this._viewCache.pop();
-    if (cachedView) {
-      viewContainerRef.insert(cachedView, index);
-    }
-    return cachedView || null;
-  }
-};
-var SelectionModel = class {
-  /** Selected values. */
-  get selected() {
-    if (!this._selected) {
-      this._selected = Array.from(this._selection.values());
-    }
-    return this._selected;
-  }
-  constructor(_multiple = false, initiallySelectedValues, _emitChanges = true, compareWith) {
-    this._multiple = _multiple;
-    this._emitChanges = _emitChanges;
-    this.compareWith = compareWith;
-    this._selection = /* @__PURE__ */ new Set();
-    this._deselectedToEmit = [];
-    this._selectedToEmit = [];
-    this.changed = new Subject();
-    if (initiallySelectedValues && initiallySelectedValues.length) {
-      if (_multiple) {
-        initiallySelectedValues.forEach((value) => this._markSelected(value));
-      } else {
-        this._markSelected(initiallySelectedValues[0]);
-      }
-      this._selectedToEmit.length = 0;
-    }
-  }
-  /**
-   * Selects a value or an array of values.
-   * @param values The values to select
-   * @return Whether the selection changed as a result of this call
-   * @breaking-change 16.0.0 make return type boolean
-   */
-  select(...values) {
-    this._verifyValueAssignment(values);
-    values.forEach((value) => this._markSelected(value));
-    const changed = this._hasQueuedChanges();
-    this._emitChangeEvent();
-    return changed;
-  }
-  /**
-   * Deselects a value or an array of values.
-   * @param values The values to deselect
-   * @return Whether the selection changed as a result of this call
-   * @breaking-change 16.0.0 make return type boolean
-   */
-  deselect(...values) {
-    this._verifyValueAssignment(values);
-    values.forEach((value) => this._unmarkSelected(value));
-    const changed = this._hasQueuedChanges();
-    this._emitChangeEvent();
-    return changed;
-  }
-  /**
-   * Sets the selected values
-   * @param values The new selected values
-   * @return Whether the selection changed as a result of this call
-   * @breaking-change 16.0.0 make return type boolean
-   */
-  setSelection(...values) {
-    this._verifyValueAssignment(values);
-    const oldValues = this.selected;
-    const newSelectedSet = new Set(values);
-    values.forEach((value) => this._markSelected(value));
-    oldValues.filter((value) => !newSelectedSet.has(this._getConcreteValue(value, newSelectedSet))).forEach((value) => this._unmarkSelected(value));
-    const changed = this._hasQueuedChanges();
-    this._emitChangeEvent();
-    return changed;
-  }
-  /**
-   * Toggles a value between selected and deselected.
-   * @param value The value to toggle
-   * @return Whether the selection changed as a result of this call
-   * @breaking-change 16.0.0 make return type boolean
-   */
-  toggle(value) {
-    return this.isSelected(value) ? this.deselect(value) : this.select(value);
-  }
-  /**
-   * Clears all of the selected values.
-   * @param flushEvent Whether to flush the changes in an event.
-   *   If false, the changes to the selection will be flushed along with the next event.
-   * @return Whether the selection changed as a result of this call
-   * @breaking-change 16.0.0 make return type boolean
-   */
-  clear(flushEvent = true) {
-    this._unmarkAll();
-    const changed = this._hasQueuedChanges();
-    if (flushEvent) {
-      this._emitChangeEvent();
-    }
-    return changed;
-  }
-  /**
-   * Determines whether a value is selected.
-   */
-  isSelected(value) {
-    return this._selection.has(this._getConcreteValue(value));
-  }
-  /**
-   * Determines whether the model does not have a value.
-   */
-  isEmpty() {
-    return this._selection.size === 0;
-  }
-  /**
-   * Determines whether the model has a value.
-   */
-  hasValue() {
-    return !this.isEmpty();
-  }
-  /**
-   * Sorts the selected values based on a predicate function.
-   */
-  sort(predicate) {
-    if (this._multiple && this.selected) {
-      this._selected.sort(predicate);
-    }
-  }
-  /**
-   * Gets whether multiple values can be selected.
-   */
-  isMultipleSelection() {
-    return this._multiple;
-  }
-  /** Emits a change event and clears the records of selected and deselected values. */
-  _emitChangeEvent() {
-    this._selected = null;
-    if (this._selectedToEmit.length || this._deselectedToEmit.length) {
-      this.changed.next({
-        source: this,
-        added: this._selectedToEmit,
-        removed: this._deselectedToEmit
-      });
-      this._deselectedToEmit = [];
-      this._selectedToEmit = [];
-    }
-  }
-  /** Selects a value. */
-  _markSelected(value) {
-    value = this._getConcreteValue(value);
-    if (!this.isSelected(value)) {
-      if (!this._multiple) {
-        this._unmarkAll();
-      }
-      if (!this.isSelected(value)) {
-        this._selection.add(value);
-      }
-      if (this._emitChanges) {
-        this._selectedToEmit.push(value);
-      }
-    }
-  }
-  /** Deselects a value. */
-  _unmarkSelected(value) {
-    value = this._getConcreteValue(value);
-    if (this.isSelected(value)) {
-      this._selection.delete(value);
-      if (this._emitChanges) {
-        this._deselectedToEmit.push(value);
-      }
-    }
-  }
-  /** Clears out the selected values. */
-  _unmarkAll() {
-    if (!this.isEmpty()) {
-      this._selection.forEach((value) => this._unmarkSelected(value));
-    }
-  }
-  /**
-   * Verifies the value assignment and throws an error if the specified value array is
-   * including multiple values while the selection model is not supporting multiple values.
-   */
-  _verifyValueAssignment(values) {
-    if (values.length > 1 && !this._multiple && (typeof ngDevMode === "undefined" || ngDevMode)) {
-      throw getMultipleValuesInSingleSelectionError();
-    }
-  }
-  /** Whether there are queued up change to be emitted. */
-  _hasQueuedChanges() {
-    return !!(this._deselectedToEmit.length || this._selectedToEmit.length);
-  }
-  /** Returns a value that is comparable to inputValue by applying compareWith function, returns the same inputValue otherwise. */
-  _getConcreteValue(inputValue, selection) {
-    if (!this.compareWith) {
-      return inputValue;
-    } else {
-      selection = selection ?? this._selection;
-      for (let selectedValue of selection) {
-        if (this.compareWith(inputValue, selectedValue)) {
-          return selectedValue;
-        }
-      }
-      return inputValue;
-    }
-  }
-};
-function getMultipleValuesInSingleSelectionError() {
-  return Error("Cannot pass multiple values into SelectionModel with single-value mode.");
-}
-var _UniqueSelectionDispatcher = class _UniqueSelectionDispatcher {
-  constructor() {
-    this._listeners = [];
-  }
-  /**
-   * Notify other items that selection for the given name has been set.
-   * @param id ID of the item.
-   * @param name Name of the item.
-   */
-  notify(id, name) {
-    for (let listener of this._listeners) {
-      listener(id, name);
-    }
-  }
-  /**
-   * Listen for future changes to item selection.
-   * @return Function used to deregister listener
-   */
-  listen(listener) {
-    this._listeners.push(listener);
-    return () => {
-      this._listeners = this._listeners.filter((registered) => {
-        return listener !== registered;
-      });
-    };
-  }
-  ngOnDestroy() {
-    this._listeners = [];
-  }
-};
-_UniqueSelectionDispatcher.ɵfac = function UniqueSelectionDispatcher_Factory(t) {
-  return new (t || _UniqueSelectionDispatcher)();
-};
-_UniqueSelectionDispatcher.ɵprov = ɵɵdefineInjectable({
-  token: _UniqueSelectionDispatcher,
-  factory: _UniqueSelectionDispatcher.ɵfac,
-  providedIn: "root"
-});
-var UniqueSelectionDispatcher = _UniqueSelectionDispatcher;
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UniqueSelectionDispatcher, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], null, null);
-})();
-
 // node_modules/@angular/cdk/fesm2022/keycodes.mjs
 var TAB = 9;
 var ENTER = 13;
@@ -814,6 +324,23 @@ function hasModifierKey(event, ...modifiers) {
     return modifiers.some((modifier) => event[modifier]);
   }
   return event.altKey || event.shiftKey || event.ctrlKey || event.metaKey;
+}
+
+// node_modules/@angular/cdk/fesm2022/coercion.mjs
+function coerceBooleanProperty(value) {
+  return value != null && `${value}` !== "false";
+}
+function coerceNumberProperty(value, fallbackValue = 0) {
+  return _isNumberValue(value) ? Number(value) : fallbackValue;
+}
+function _isNumberValue(value) {
+  return !isNaN(parseFloat(value)) && !isNaN(Number(value));
+}
+function coerceArray(value) {
+  return Array.isArray(value) ? value : [value];
+}
+function coerceElement(elementOrRef) {
+  return elementOrRef instanceof ElementRef ? elementOrRef.nativeElement : elementOrRef;
 }
 
 // node_modules/@angular/cdk/fesm2022/observers.mjs
@@ -3323,6 +2850,164 @@ var A11yModule = _A11yModule;
   }], null);
 })();
 
+// node_modules/@angular/cdk/fesm2022/bidi.mjs
+var DIR_DOCUMENT = new InjectionToken("cdk-dir-doc", {
+  providedIn: "root",
+  factory: DIR_DOCUMENT_FACTORY
+});
+function DIR_DOCUMENT_FACTORY() {
+  return inject(DOCUMENT);
+}
+var RTL_LOCALE_PATTERN = /^(ar|ckb|dv|he|iw|fa|nqo|ps|sd|ug|ur|yi|.*[-_](Adlm|Arab|Hebr|Nkoo|Rohg|Thaa))(?!.*[-_](Latn|Cyrl)($|-|_))($|-|_)/i;
+function _resolveDirectionality(rawValue) {
+  const value = rawValue?.toLowerCase() || "";
+  if (value === "auto" && typeof navigator !== "undefined" && navigator?.language) {
+    return RTL_LOCALE_PATTERN.test(navigator.language) ? "rtl" : "ltr";
+  }
+  return value === "rtl" ? "rtl" : "ltr";
+}
+var _Directionality = class _Directionality {
+  constructor(_document) {
+    this.value = "ltr";
+    this.change = new EventEmitter();
+    if (_document) {
+      const bodyDir = _document.body ? _document.body.dir : null;
+      const htmlDir = _document.documentElement ? _document.documentElement.dir : null;
+      this.value = _resolveDirectionality(bodyDir || htmlDir || "ltr");
+    }
+  }
+  ngOnDestroy() {
+    this.change.complete();
+  }
+};
+_Directionality.ɵfac = function Directionality_Factory(t) {
+  return new (t || _Directionality)(ɵɵinject(DIR_DOCUMENT, 8));
+};
+_Directionality.ɵprov = ɵɵdefineInjectable({
+  token: _Directionality,
+  factory: _Directionality.ɵfac,
+  providedIn: "root"
+});
+var Directionality = _Directionality;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Directionality, [{
+    type: Injectable,
+    args: [{
+      providedIn: "root"
+    }]
+  }], () => [{
+    type: void 0,
+    decorators: [{
+      type: Optional
+    }, {
+      type: Inject,
+      args: [DIR_DOCUMENT]
+    }]
+  }], null);
+})();
+var _Dir = class _Dir {
+  constructor() {
+    this._dir = "ltr";
+    this._isInitialized = false;
+    this.change = new EventEmitter();
+  }
+  /** @docs-private */
+  get dir() {
+    return this._dir;
+  }
+  set dir(value) {
+    const previousValue = this._dir;
+    this._dir = _resolveDirectionality(value);
+    this._rawDir = value;
+    if (previousValue !== this._dir && this._isInitialized) {
+      this.change.emit(this._dir);
+    }
+  }
+  /** Current layout direction of the element. */
+  get value() {
+    return this.dir;
+  }
+  /** Initialize once default value has been set. */
+  ngAfterContentInit() {
+    this._isInitialized = true;
+  }
+  ngOnDestroy() {
+    this.change.complete();
+  }
+};
+_Dir.ɵfac = function Dir_Factory(t) {
+  return new (t || _Dir)();
+};
+_Dir.ɵdir = ɵɵdefineDirective({
+  type: _Dir,
+  selectors: [["", "dir", ""]],
+  hostVars: 1,
+  hostBindings: function Dir_HostBindings(rf, ctx) {
+    if (rf & 2) {
+      ɵɵattribute("dir", ctx._rawDir);
+    }
+  },
+  inputs: {
+    dir: "dir"
+  },
+  outputs: {
+    change: "dirChange"
+  },
+  exportAs: ["dir"],
+  standalone: true,
+  features: [ɵɵProvidersFeature([{
+    provide: Directionality,
+    useExisting: _Dir
+  }])]
+});
+var Dir = _Dir;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(Dir, [{
+    type: Directive,
+    args: [{
+      selector: "[dir]",
+      providers: [{
+        provide: Directionality,
+        useExisting: Dir
+      }],
+      host: {
+        "[attr.dir]": "_rawDir"
+      },
+      exportAs: "dir",
+      standalone: true
+    }]
+  }], null, {
+    change: [{
+      type: Output,
+      args: ["dirChange"]
+    }],
+    dir: [{
+      type: Input
+    }]
+  });
+})();
+var _BidiModule = class _BidiModule {
+};
+_BidiModule.ɵfac = function BidiModule_Factory(t) {
+  return new (t || _BidiModule)();
+};
+_BidiModule.ɵmod = ɵɵdefineNgModule({
+  type: _BidiModule,
+  imports: [Dir],
+  exports: [Dir]
+});
+_BidiModule.ɵinj = ɵɵdefineInjector({});
+var BidiModule = _BidiModule;
+(() => {
+  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(BidiModule, [{
+    type: NgModule,
+    args: [{
+      imports: [Dir],
+      exports: [Dir]
+    }]
+  }], null, null);
+})();
+
 // node_modules/@angular/cdk/fesm2022/cdk.mjs
 var VERSION = new Version("17.2.2");
 
@@ -3480,6 +3165,28 @@ function _checkCdkVersionMatch() {
     console.warn("The Angular Material version (" + VERSION2.full + ") does not match the Angular CDK version (" + VERSION.full + ").\nPlease ensure the versions of these two packages exactly match.");
   }
 }
+var _ErrorStateTracker = class {
+  constructor(_defaultMatcher, ngControl, _parentFormGroup, _parentForm, _stateChanges) {
+    this._defaultMatcher = _defaultMatcher;
+    this.ngControl = ngControl;
+    this._parentFormGroup = _parentFormGroup;
+    this._parentForm = _parentForm;
+    this._stateChanges = _stateChanges;
+    this.errorState = false;
+  }
+  /** Updates the error state based on the provided error state matcher. */
+  updateErrorState() {
+    const oldState = this.errorState;
+    const parent = this._parentFormGroup || this._parentForm;
+    const matcher = this.matcher || this._defaultMatcher;
+    const control = this.ngControl ? this.ngControl.control : null;
+    const newState = matcher?.isErrorState(control, parent) ?? false;
+    if (newState !== oldState) {
+      this.errorState = newState;
+      this._stateChanges.next();
+    }
+  }
+};
 var MAT_DATE_LOCALE = new InjectionToken("MAT_DATE_LOCALE", {
   providedIn: "root",
   factory: MAT_DATE_LOCALE_FACTORY
@@ -5220,36 +4927,36 @@ var _MatInternalFormField = __MatInternalFormField;
 })();
 
 export {
-  coerceBooleanProperty,
-  coerceNumberProperty,
-  coerceElement,
   Platform,
+  getSupportedInputTypes,
+  normalizePassiveListenerOptions,
   RtlScrollAxisType,
   supportsScrollBehavior,
   getRtlScrollAxisType,
   _getFocusedElementPierceShadowDom,
-  Directionality,
-  BidiModule,
-  isDataSource,
-  ArrayDataSource,
-  _VIEW_REPEATER_STRATEGY,
-  _RecycleViewRepeaterStrategy,
-  SelectionModel,
   ENTER,
   ESCAPE,
   SPACE,
   A,
   hasModifierKey,
+  coerceBooleanProperty,
+  coerceNumberProperty,
+  coerceElement,
   CdkObserveContent,
   ObserversModule,
   FocusKeyManager,
   InteractivityChecker,
   FocusTrapFactory,
   FocusMonitor,
+  Directionality,
+  BidiModule,
   MatCommonModule,
+  _ErrorStateTracker,
+  ErrorStateMatcher,
   RippleRenderer,
   MAT_RIPPLE_GLOBAL_OPTIONS,
   MatRippleModule,
-  MatPseudoCheckboxModule
+  MatPseudoCheckboxModule,
+  MatRippleLoader
 };
-//# sourceMappingURL=chunk-WJQ63HP4.js.map
+//# sourceMappingURL=chunk-HFWVBEHK.js.map
