@@ -8,12 +8,19 @@ import { ListComponent } from './list/list.component';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
+import { DeleteDirective } from '../../../directives/admin/delete.directive';
+import {MatDialogModule} from '@angular/material/dialog';
+import { DeleteDialogComponent } from '../../../../app/dialogs/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
     ProductsComponent,
     CreateComponent,
-    ListComponent
+    ListComponent,
+    DeleteDirective,
+    DeleteDialogComponent
   ],
   imports: [
     CommonModule,
@@ -23,7 +30,12 @@ import {MatButtonModule} from '@angular/material/button';
     MatSidenavModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatPaginator,
+    MatDialogModule
+   
   ]
 })
 export class ProductsModule { }

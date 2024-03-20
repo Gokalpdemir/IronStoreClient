@@ -15,6 +15,36 @@ a{
        width: 100%;
  }
 }
-.baset-link{
-   padding: 8px 0px 8px 0px;
+.basket-link{
+   padding: 12px 0px 8px 0px;
+}
+
+.form-container,
+.product-create {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.mat-form-field {
+  flex: 1 0 100%; 
+  margin-right: 10px; 
+}
+
+
+.mat-list {
+  padding: 0;
+
+.mat-list-item {
+  margin-bottom: 5px; 
+}
+
+
+@media (max-width: 600px) {
+  .form-container,
+  .product-create,
+  .mat-list {
+    flex-direction: column; 
+  }
+}
 }

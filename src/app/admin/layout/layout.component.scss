@@ -8,4 +8,11 @@
     
     
   }
-  
+  .btn-sidebar-hidden{
+    display: none;
+  }
+  @media(max-width:992px){
+    .btn-sidebar-hidden{
+      display: block;
+    }
+  }
