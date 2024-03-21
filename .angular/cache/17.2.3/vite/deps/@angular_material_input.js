@@ -8,7 +8,8 @@ import {
   MatLabel,
   MatPrefix,
   MatSuffix
-} from "./chunk-YLNZTZ6S.js";
+} from "./chunk-PQVCRX4G.js";
+import "./chunk-TQOHTYRL.js";
 import {
   FormGroupDirective,
   NgControl,
@@ -26,7 +27,6 @@ import {
   getSupportedInputTypes,
   normalizePassiveListenerOptions
 } from "./chunk-YJGMKVF2.js";
-import "./chunk-TQOHTYRL.js";
 import {
   DOCUMENT
 } from "./chunk-AB2WKPT6.js";

@@ -29,12 +29,12 @@
 }
 
 .left {
-  width: 22%;
+  width: 25%;
   background-color: #f5f5f5
 }
 
 .right {
-  width: 78%; 
+  width: 75%; 
 }
 
 @media (max-width: 768px) {
@@ -46,4 +46,14 @@
   .right {
       width: 100%; /* Tam genişlik */
   }
+}
+
+.productContainer{
+  display: flex;
+}
+@media screen and (max-width: 992px) {
+   
+ .productContainer{
+  flex-direction: column;
+ } 
 }

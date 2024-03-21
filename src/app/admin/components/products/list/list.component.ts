@@ -47,16 +47,19 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
       this.paginator?this.paginator.pageIndex:0,
       this.paginator?this.paginator.pageSize:5,
       () => this.hideSpinner(SpinnerType.SquareSpin),
-      (errorMessage) =>
-        this.aletifyService.message(errorMessage, {
-          dismissOthers: true,
-          messageType: MessageType.Error,
-          position: Position.TopRight,
-        })
+      () =>{ 
+        this.hideSpinner(SpinnerType.SquareSpin),
+        this.aletifyService.message("Ürünler Listelenemedi", {
+        dismissOthers: true,
+        messageType: MessageType.Error,
+        position: Position.TopRight,
+      })}
+        
+       
     );
     this.dataSource = new MatTableDataSource<List_Product>( allProductResponse.products);
     this.paginator.length=allProductResponse.totalCount
-    console.log(allProductResponse);
+    
   }
 
 

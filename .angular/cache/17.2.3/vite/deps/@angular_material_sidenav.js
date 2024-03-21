@@ -4,6 +4,13 @@ import {
   ScrollDispatcher,
   ViewportRuler
 } from "./chunk-EVX6BRXC.js";
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger
+} from "./chunk-TQOHTYRL.js";
 import "./chunk-QELLCZZO.js";
 import {
   Directionality,
@@ -17,13 +24,6 @@ import {
   coerceNumberProperty,
   hasModifierKey
 } from "./chunk-YJGMKVF2.js";
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger
-} from "./chunk-TQOHTYRL.js";
 import {
   DOCUMENT
 } from "./chunk-AB2WKPT6.js";
