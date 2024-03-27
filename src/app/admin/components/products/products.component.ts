@@ -4,6 +4,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpClientService } from '../../../services/common/http-client.service';
 import { Create_Product } from '../../../contracts/create_product';
 import { ListComponent } from './list/list.component';
+import { SelectProductImageDialogsComponent } from '../../../dialogs/select-product-image-dialogs/select-product-image-dialogs.component';
 
 @Component({
   selector: 'app-products',
@@ -23,4 +24,5 @@ ngOnInit(): void {
 createdProduct(createdProduct:Create_Product){
  this.listComponents.getProducts();
 }
+
 }

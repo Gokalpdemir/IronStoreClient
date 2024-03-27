@@ -12,6 +12,8 @@ import {
 } from '../../../../services/admin/alertify.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { RequestParameters } from '../../../../services/common/http-client.service';
+import { DialogService } from '../../../../services/common/dialog.service';
+import { SelectProductImageDialogsComponent } from '../../../../dialogs/select-product-image-dialogs/select-product-image-dialogs.component';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -21,7 +23,8 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
   constructor(
     spinner: NgxSpinnerService,
     private productService: ProductService,
-    private aletifyService: AlertifyService
+    private aletifyService: AlertifyService,
+    private dialogService:DialogService
   ) {
     super(spinner);
   }
@@ -34,6 +37,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
     'price',
     'createdDate',
     'updatedDate',
+    'photos',
     'edit',
     'delete'
   ];
@@ -62,6 +66,16 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
     
   }
 
+  addProductImages(id:String){
+     this.dialogService.openDialog({
+      componentType:SelectProductImageDialogsComponent,
+      data:id,
+      options:{
+        width:"1400px"
+      }
+
+    })
+  }
 
   async pageChanged(){
     await this.getProducts()
@@ -69,4 +83,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
   async ngOnInit() {
    await  this.getProducts()
   }
+
+
+
 }

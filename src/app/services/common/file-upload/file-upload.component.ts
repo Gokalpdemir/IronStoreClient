@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgxFileDropEntry, FileSystemFileEntry } from 'ngx-file-drop';
 import { HttpClientService } from '../http-client.service';
 import { HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -28,7 +28,7 @@ export class FileUploadComponent {
     private dialog:MatDialog,
     private dialogService:DialogService
   ) {}
-
+  @Output() uploadfile:EventEmitter<any>=new EventEmitter();
   public files: NgxFileDropEntry[];
   @Input() options: Partial<FileUploadOptions>;
   public selectedFiles(files: NgxFileDropEntry[]) {
@@ -64,6 +64,9 @@ export class FileUploadComponent {
               messageType: MessageType.Success,
               position: Position.TopRight,
             });
+            this.uploadfile.emit();
+            
+            
           } else {
             this.customToastrService.message(successMessage, 'Başarılı!', {
               messageType: ToastrMessageType.Success,
