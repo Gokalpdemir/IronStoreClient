@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+            <div class="mb-2">
+                <label for="nameSurname" class="form-label">Name-Surname </label>
+                <input type="text" formControlName="nameSurname" class="form-control" id="nameSurname"
+                    [ngClass]="{'is-invalid':submitted && component['nameSurname'].errors}" placeholder="Name Surname">
+                <div *ngIf="submitted && component['nameSurname'].errors?.['required']"
+                    class="form-text invalid-feedback">Please do not leave this field blank.
+                </div>
+                <div *ngIf="submitted && (component['nameSurname'].errors?.['maxlength']||component['nameSurname'].errors?.['minlength'])"
+                    class="form-text invalid-feedback">
+                    NameSurname length must be between 3 and 40 characters
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="userName" class="form-label">User Name </label>
+                <input type="text" formControlName="userName" class="form-control" id="userName"
+                    [ngClass]="{'is-invalid':submitted && component['userName'].errors}" placeholder="User Name">
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['userName'].errors?.['required']">Please do not leave this field blank.
+                </div>
+                <div *ngIf="submitted && (component['userName'].errors?.['maxlength']||component['userName'].errors?.['minlength'])"
+                    class="form-text invalid-feedback">
+                    User Name length must be between 3 and 40 characters
+                </div>
+            </div>
+            <div class="mb-2">
+                <label for="email" class="form-label">Email address </label>
+                <input type="email" formControlName="email" class="form-control" id="email" placeholder="Email"
+                    [ngClass]="{'is-invalid':submitted && component['email'].errors}">
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['email'].errors?.['required']">Please do not leave this field blank.</div>
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['email'].errors?.['email']">Not suitable for email type</div>
+            </div>
+            <div class="mb-2">
+                <label for="password" class="form-label">Password </label>
+                <input type="password" formControlName="password" class="form-control" id="password"
+                    placeholder="password" [ngClass]="{'is-invalid':submitted && component['password'].errors}">
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['password'].errors?.['required']">Please do not leave this field blank.</div>
+                <div class="form-text invalid-feedback" *ngIf="submitted && (component['password'].errors?.['minlength']||component['password'].errors?.['maxlength'])">NameSurname length must be between 8 and 40 characters.</div>
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['password'].errors?.['pattern']">Must contain at least one lowercase letter, one uppercase letter, one number and one special character </div>
+
+            </div>
+            <div class="mb-2">
+                <label for="passwordRepeat" class="form-label">Password Repeat </label>
+                <input type="password" formControlName="repeatPassword" class="form-control"
+                    [ngClass]="{'is-invalid':submitted && component['repeatPassword'].errors}" id="passwordRepeat"
+                    placeholder="Password Repeat">
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['repeatPassword'].errors?.['required']">Please do not leave this field blank.</div>
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['repeatPassword'].errors?.['passwordMismatch']">Passwords do not match
+                </div>
+
+            </div>
+            <br>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>

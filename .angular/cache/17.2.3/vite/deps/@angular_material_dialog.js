@@ -11,7 +11,6 @@ import {
   TemplatePortal
 } from "./chunk-PJACSK45.js";
 import "./chunk-FPL4VKXS.js";
-import "./chunk-QELLCZZO.js";
 import {
   animate,
   animateChild,
@@ -22,6 +21,7 @@ import {
   transition,
   trigger
 } from "./chunk-TQOHTYRL.js";
+import "./chunk-QELLCZZO.js";
 import {
   A11yModule,
   Directionality,

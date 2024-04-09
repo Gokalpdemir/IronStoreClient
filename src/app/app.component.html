@@ -14,7 +14,7 @@
               <li class="nav-item">
                   <a class="nav-link" routerLink="products">Products</a>
               </li>
-              <li class="nav-item dropdown">
+              <!-- <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                       aria-expanded="false">
                       Dropdown
@@ -27,16 +27,22 @@
                       </li>
                       <li><a class="dropdown-item" href="#">Something else here</a></li>
                   </ul>
-              </li>
+              </li> -->
               <li class="nav-item">
                   <a class="nav-link " routerLink="/admin">Admin</a>
               </li>
+              
           </ul>
           <form class="d-flex n-search" role="search">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
-         
+            <div style="display: flex;gap: 0.5em; justify-content: center;">
+                <a class="nav-link " routerLink="register">Register</a> 
+                <a class="nav-link " routerLink="login">Login</a>
+            </div>
+            
+        
            <a class="nav-link basket-link" routerLink="basket">Basket</a>
       </div>
   </div>

@@ -9,11 +9,9 @@ import {
   MatSelectModule,
   MatSelectTrigger,
   matSelectAnimations
-} from "./chunk-ZYPVL5OZ.js";
+} from "./chunk-YXLOWD3A.js";
 import "./chunk-PJACSK45.js";
 import "./chunk-FPL4VKXS.js";
-import "./chunk-QELLCZZO.js";
-import "./chunk-3BJ42RCV.js";
 import {
   MatError,
   MatFormField,
@@ -23,6 +21,8 @@ import {
   MatSuffix
 } from "./chunk-O2QH2TQN.js";
 import "./chunk-TQOHTYRL.js";
+import "./chunk-QELLCZZO.js";
+import "./chunk-62AIYGMD.js";
 import {
   MatOptgroup,
   MatOption
