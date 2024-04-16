@@ -42,12 +42,12 @@
 
             </div>
             <div class="mb-2">
-                <label for="passwordRepeat" class="form-label">Password Repeat </label>
-                <input type="password" formControlName="repeatPassword" class="form-control"
-                    [ngClass]="{'is-invalid':submitted && component['repeatPassword'].errors}" id="passwordRepeat"
+                <label for="passwordConfirm" class="form-label">Password Repeat </label>
+                <input type="password" formControlName="passwordConfirm" class="form-control"
+                    [ngClass]="{'is-invalid':submitted && component['passwordConfirm'].errors}" id="passwordConfirm"
                     placeholder="Password Repeat">
-                <div class="form-text invalid-feedback" *ngIf="submitted && component['repeatPassword'].errors?.['required']">Please do not leave this field blank.</div>
-                <div class="form-text invalid-feedback" *ngIf="submitted && component['repeatPassword'].errors?.['passwordMismatch']">Passwords do not match
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['passwordConfirm'].errors?.['required']">Please do not leave this field blank.</div>
+                <div class="form-text invalid-feedback" *ngIf="submitted && component['passwordConfirm'].errors?.['passwordMismatch']">Passwords do not match
                 </div>
 
             </div>
