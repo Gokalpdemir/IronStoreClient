@@ -22,8 +22,6 @@ export class LoginComponent extends BaseComponent {
   async Login(userNameOrEmail: string, password: string) {
     this.showSpinner(SpinnerType.BallSpinFade)
    const result :any= await this.userService.Login(userNameOrEmail, password,()=>this.hideSpinner(SpinnerType.BallSpinFade));
-   if(result.success){
-    console.log("dfsf")
-   }
+   
   }
 }
