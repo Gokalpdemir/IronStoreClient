@@ -31,9 +31,9 @@ export class UserService {
        userNameOrEmail,
        password
      })
-    const token:TokenResponse= await firstValueFrom(observable) as TokenResponse;
-    if(token){
-     localStorage.setItem("accessToken",token.token.accessToken)
+    const tokenResponse:TokenResponse= await firstValueFrom(observable) as TokenResponse;
+    if(tokenResponse){
+     localStorage.setItem("accessToken",tokenResponse.token.accessToken)
       this.toastrService.message("Kullanıcı girişi başarıyla sağlanmıştır","Giriş Başarılı",{
        messageType:ToastrMessageType.Success,
        position:ToastrPosition.TopRight     

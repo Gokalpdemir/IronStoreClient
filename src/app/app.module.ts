@@ -8,14 +8,10 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { HttpClientModule } from '@angular/common/http';
-
+import { JwtModule } from '@auth0/angular-jwt';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    
-    
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     ToastrModule.forRoot(),
@@ -23,13 +19,18 @@ import { HttpClientModule } from '@angular/common/http';
     AdminModule,
     UiModule,
     NgxSpinnerModule,
-    HttpClientModule
-    
+    HttpClientModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: () => localStorage.getItem('accessToken'),
+        allowedDomains: ['localhost:7040'],
+      },
+    }),
   ],
   providers: [
     provideAnimationsAsync(),
-    {provide:"baseUrl",useValue:"https://localhost:7040/api",multi:true}
+    { provide: 'baseUrl', useValue: 'https://localhost:7040/api', multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

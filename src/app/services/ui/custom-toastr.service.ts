@@ -30,5 +30,5 @@ BottomCenter="toast-bottom-center",
 }
 export class ToasterOptions{
   messageType:ToastrMessageType;
-  position:ToastrPosition
+  position:ToastrPosition;
 }
