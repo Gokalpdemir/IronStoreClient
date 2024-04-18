@@ -21,7 +21,7 @@ import {
   coerceBooleanProperty,
   coerceNumberProperty,
   hasModifierKey
-} from "./chunk-ECGH2ZWN.js";
+} from "./chunk-MQVB4HGY.js";
 import {
   CommonModule,
   NgTemplateOutlet
