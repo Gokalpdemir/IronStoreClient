@@ -7,6 +7,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/common/auth.service';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { SocialAuthService, SocialUser } from '@abacritt/angularx-social-login';
+import { UserAuthService } from '../../../services/common/models/user-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -21,19 +22,20 @@ export class LoginComponent extends BaseComponent {
     private authService:AuthService,
     private activatedRoute:ActivatedRoute,
     private router:Router,
-    private socialAuthService:SocialAuthService
+    private socialAuthService:SocialAuthService,
+    private userAuthService:UserAuthService
   ) {
     super(spinner);
     socialAuthService.authState.subscribe(async(user:SocialUser)=>{
       spinner.show(SpinnerType.BallSpinFade)
-     await userService.loginWithGoogle(user,()=> spinner.hide(SpinnerType.BallSpinFade));
+     await userAuthService.loginWithGoogle(user,()=> spinner.hide(SpinnerType.BallSpinFade));
      authService.identityCheck()
     })
   }
 
   async Login(userNameOrEmail: string, password: string) {
     this.showSpinner(SpinnerType.BallSpinFade)
-   const result :any= await this.userService.Login(userNameOrEmail, password,()=>{
+   const result :any= await this.userAuthService.Login(userNameOrEmail, password,()=>{
     this.authService.identityCheck();
     this.activatedRoute.queryParams.subscribe(params=>{
       debugger

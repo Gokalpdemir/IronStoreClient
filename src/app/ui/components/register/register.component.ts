@@ -82,7 +82,8 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-
+   user.nameSurname= user.nameSurname.trim()
+   user.userName= user.userName.trim()
    const result:Create_User= await this.userService.create(user);
    if(result.succeeded){
       this.toastService.message(result.message,"Kullanıcı kaydı başarılı",{
