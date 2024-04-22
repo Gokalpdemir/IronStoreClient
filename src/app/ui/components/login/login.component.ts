@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { UserService } from '../../../services/common/models/user.service';
-import { CustomToastrService } from '../../../services/ui/custom-toastr.service';
+import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../../services/ui/custom-toastr.service';
 import { BaseComponent, SpinnerType } from '../../../base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AuthService } from '../../../services/common/auth.service';
@@ -33,19 +33,21 @@ export class LoginComponent extends BaseComponent {
     })
   }
 
-  async Login(userNameOrEmail: string, password: string) {
+   async Login(userNameOrEmail: string, password: string) {
     this.showSpinner(SpinnerType.BallSpinFade)
    const result :any= await this.userAuthService.Login(userNameOrEmail, password,()=>{
     this.authService.identityCheck();
     this.activatedRoute.queryParams.subscribe(params=>{
-      debugger
+      
       const returnUrl:string=params["returnUrl"];
       if(returnUrl){
           this.router.navigate([returnUrl]);
       }
     })
     this.hideSpinner(SpinnerType.BallSpinFade)
-   });
+   }).catch(err=>{
+    this.hideSpinner(SpinnerType.BallSpinFade);
+   })
    
   }
 }

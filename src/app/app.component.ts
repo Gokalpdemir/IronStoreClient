@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   constructor(public authService:AuthService,private router:Router,private toast:CustomToastrService){
     authService.identityCheck()
     }
-  
+    
   ngOnInit(): void {
     
   }
