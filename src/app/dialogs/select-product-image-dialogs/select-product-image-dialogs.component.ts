@@ -61,7 +61,14 @@ export class SelectProductImageDialogsComponent extends BaseDialog<SelectProduct
     
   }
   @ViewChild(SelectProductImageDialogsComponent)selecProductImageComponent:SelectProductImageDialogsComponent
-
+  selectedImageId:string
+  showCase(imageId:string){
+  this.spinnerService.show(SpinnerType.BallSpinFade)
+   this.productService.selectShowCaseImage(imageId,this.data as string,()=>{
+     this.spinnerService.hide(SpinnerType.BallSpinFade)
+   })
+   this.selectedImageId=imageId
+  }
 }
 export enum SelectProductImageState {
   close,

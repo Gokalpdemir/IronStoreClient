@@ -45,10 +45,10 @@ export class ProductService {
     size: number = 5,
     successCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
-  ): Promise<{ totalCount: number; products: List_Product[] }> {
-    let _responseModel: { totalCount: number; products: List_Product[] } = null;
+  ): Promise<{ totalProductCount: number; products: List_Product[] }> {
+    let _responseModel: { totalProductCount: number; products: List_Product[] } = null;
     const getFunc = this.httpClientService.get<{
-      totalCount: number;
+      totalProductCount: number;
       products: List_Product[];
     }>({
       contoller: 'products',
@@ -56,7 +56,7 @@ export class ProductService {
       queryString: `page=${page}&size=${size}`,
     });
 
-    await firstValueFrom<{ totalCount: number; products: List_Product[] }>(
+    await firstValueFrom<{ totalProductCount: number; products: List_Product[] }>(
       getFunc
     )
       .then((data) => {
@@ -88,4 +88,15 @@ export class ProductService {
    successCallback();
    }
 
+   async selectShowCaseImage(imageId:string,productId:string,successCallBack?:()=>void):Promise<void>{
+     const selectShowCaseImageObservable = this.httpClientService.put({
+        contoller:"Products",
+        action:"selectShowCase",
+        queryString:`imageId=${imageId}&productId=${productId}`
+
+       },{})
+
+       await firstValueFrom(selectShowCaseImageObservable);
+       successCallBack();
+   }
 }

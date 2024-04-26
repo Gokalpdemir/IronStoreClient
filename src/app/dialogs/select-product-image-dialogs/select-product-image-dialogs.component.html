@@ -8,6 +8,7 @@
   
   <mat-dialog-content class="mat-typography" >
     <mat-card  class="product-image-card" *ngFor="let image of images">
+      <input type="radio" name="image" [value]="image.id" (click)="showCase(image.id)"  [checked]="image.showcase" >
       <img width="200px" height="200px" mat-card-image [src]="image.path" alt="Photo of a Shiba Inu">
       <mat-card-content>
       </mat-card-content>

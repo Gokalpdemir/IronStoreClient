@@ -47,7 +47,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
   @ViewChild(MatPaginator) paginator: MatPaginator;
    async getProducts(){
     this.showSpinner(SpinnerType.SquareSpin);
-    const allProductResponse:{totalCount:number,products:List_Product[]} = await this.productService.read(
+    const allProductResponse:{totalProductCount:number,products:List_Product[]} = await this.productService.read(
       this.paginator?this.paginator.pageIndex:0,
       this.paginator?this.paginator.pageSize:5,
       () => this.hideSpinner(SpinnerType.SquareSpin),
@@ -62,7 +62,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
        
     );
     this.dataSource = new MatTableDataSource<List_Product>( allProductResponse.products);
-    this.paginator.length=allProductResponse.totalCount
+    this.paginator.length=allProductResponse.totalProductCount
     
   }
 
