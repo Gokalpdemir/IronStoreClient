@@ -1,11 +1,11 @@
 <div class="listProductContainer" >
-    <div class="card" style="width: 18rem;" *ngFor="let product of products" >
-      <img *ngIf="!product.imagePath" src="../../../../../assets/defaultProductİmage.png" style="width: 200px; height: 200px;margin: auto " class="card-img-top" alt="...">
-      <img *ngIf="product.imagePath " src="{{baseUrls}}/{{product.imagePath}}" style="width: 200px; height: 200px;margin: auto " class="card-img-top" alt="...">
+    <div class="card" style="width: 18rem;" *ngFor="let product of products"  >
+      <img *ngIf="!product.imagePath" [routerLink]="['/',product.id]" src="../../../../../assets/defaultProductİmage.png" style="width: 200px; height: 200px;margin: auto " class="card-img-top" alt="...">
+      <img *ngIf="product.imagePath " [routerLink]="['/',product.id]" src="{{baseUrls}}/{{product.imagePath}}" style="width: 200px; height: 200px;margin: auto " class="card-img-top" alt="...">
         <div class="card-body">
           <h3 class="card-title">{{product.name}}</h3>
           <p class="card-text">Fiyat : {{product.price | currency:'₺'}} <br/> Stok : {{product.stock}}</p>
-          <a href="#" class="btn btn-success">Sepete Ekle</a>
+          <button  class="btn btn-success" (click)="addToBasket(product.id)">Sepete Ekle</button>
         </div>
       </div>
       

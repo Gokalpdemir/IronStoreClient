@@ -46,7 +46,10 @@ export class ProductService {
     successCallBack?: () => void,
     errorCallBack?: (errorMessage: string) => void
   ): Promise<{ totalProductCount: number; products: List_Product[] }> {
-    let _responseModel: { totalProductCount: number; products: List_Product[] } = null;
+    let _responseModel: {
+      totalProductCount: number;
+      products: List_Product[];
+    } = null;
     const getFunc = this.httpClientService.get<{
       totalProductCount: number;
       products: List_Product[];
@@ -56,9 +59,10 @@ export class ProductService {
       queryString: `page=${page}&size=${size}`,
     });
 
-    await firstValueFrom<{ totalProductCount: number; products: List_Product[] }>(
-      getFunc
-    )
+    await firstValueFrom<{
+      totalProductCount: number;
+      products: List_Product[];
+    }>(getFunc)
       .then((data) => {
         _responseModel = data;
         successCallBack();
@@ -69,34 +73,69 @@ export class ProductService {
 
     return _responseModel;
   }
+  async getProduct(
+    id: string,
+    successCallBack?: () => void
+  ): Promise<List_Product> {
+    const observable: Observable<List_Product> = this.httpClientService.get(
+      {
+        contoller: 'Products',
+      },
+      id
+    );
+    const product: List_Product = await firstValueFrom(observable);
+    successCallBack();
+    return product;
+  }
 
- async delete(id: string) {
-   const deleteObservable:Observable<any>=  this.httpClientService.delete<any>({ contoller: 'Products'},id);
+  async delete(id: string) {
+    const deleteObservable: Observable<any> =
+      this.httpClientService.delete<any>({ contoller: 'Products' }, id);
     await firstValueFrom(deleteObservable);
   }
 
-   async getProductImage(id:string,successCallBack?:()=> void):Promise<List_Product_Image[]>{
-    const getObservable:Observable<List_Product_Image[]>=this.httpClientService.get<List_Product_Image[]>({contoller:"Products",action:"GetProductsImage"},id);
-    const images:List_Product_Image[]=await firstValueFrom(getObservable);
-     successCallBack();
-    return images ;
+  async getProductImage(
+    id: string,
+    successCallBack?: () => void
+  ): Promise<List_Product_Image[]> {
+    const getObservable: Observable<List_Product_Image[]> =
+      this.httpClientService.get<List_Product_Image[]>(
+        { contoller: 'Products', action: 'GetProductsImage' },
+        id
+      );
+    const images: List_Product_Image[] = await firstValueFrom(getObservable);
+    successCallBack();
+    return images;
   }
 
-   async deleteImage(id:string,imageId:string,successCallback?:()=> void){
-   const deleteObservable= this.httpClientService.delete({action:"DeleteProductImage",contoller:"Products",queryString:`imageId=${imageId}`},id)
-   await firstValueFrom(deleteObservable);
-   successCallback();
-   }
+  async deleteImage(id: string, imageId: string, successCallback?: () => void) {
+    const deleteObservable = this.httpClientService.delete(
+      {
+        action: 'DeleteProductImage',
+        contoller: 'Products',
+        queryString: `imageId=${imageId}`,
+      },
+      id
+    );
+    await firstValueFrom(deleteObservable);
+    successCallback();
+  }
 
-   async selectShowCaseImage(imageId:string,productId:string,successCallBack?:()=>void):Promise<void>{
-     const selectShowCaseImageObservable = this.httpClientService.put({
-        contoller:"Products",
-        action:"selectShowCase",
-        queryString:`imageId=${imageId}&productId=${productId}`
+  async selectShowCaseImage(
+    imageId: string,
+    productId: string,
+    successCallBack?: () => void
+  ): Promise<void> {
+    const selectShowCaseImageObservable = this.httpClientService.put(
+      {
+        contoller: 'Products',
+        action: 'selectShowCase',
+        queryString: `imageId=${imageId}&productId=${productId}`,
+      },
+      {}
+    );
 
-       },{})
-
-       await firstValueFrom(selectShowCaseImageObservable);
-       successCallBack();
-   }
+    await firstValueFrom(selectShowCaseImageObservable);
+    successCallBack();
+  }
 }

@@ -19,6 +19,7 @@ export class AuthService {
    }
    _isAuthenticated=token !=null && !expired;
    console.log(_isAuthenticated)
+  //  console.log(this.jwtHelper.decodeToken(token)['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'])
   }
   get isAuthenticated():boolean{
       return _isAuthenticated;

@@ -1,5 +1,5 @@
 import { Call } from '@angular/compiler';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import {
   HubConnection,
   HubConnectionBuilder,
@@ -14,9 +14,10 @@ export class SignalrService {
   get connection(): HubConnection {
     return this._connection;
   }
-  constructor() {}
+  constructor(@Inject("baseSignalRUrl") private baseSignalRUrl:string) {}
 
   start(hubUrl: string) {
+    hubUrl = this.baseSignalRUrl+hubUrl
     if (
       !this.connection ||
       this.connection?.state == HubConnectionState.Disconnected

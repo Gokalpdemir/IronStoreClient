@@ -1,1 +1,60 @@
-<p>baskets works!</p>
+<section class="h-100" style="background-color: #eee;">
+    <div class="container h-100 py-5">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-10">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3 class="fw-normal mb-0 text-black text-xl">Sepet </h3>
+                    <i class="fa-solid fa-plus"></i>
+                </div>
+
+                <div class="card rounded-3 mb-4" *ngFor="let basket of baskets">
+                    <div class="card-body p-4">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-md-2 col-lg-2 col-xl-2">
+                                <img style="height: 150px;object-fit: cover;width: 300px;vertical-align: middle;object-position: center;" [src]="baseUrls + '/' + basket.productImageFiles[0]" class="img-fluid rounded-3" alt="Cotton T-shirt">
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-3">
+                                <p class="lead fw-normal mb-2">{{basket.name}}</p>
+                                <p><span class="text-muted">{{basket.price| currency:'₺'}} </span>M <span class="text-muted">Color: </span>Grey</p>
+                            </div>
+                            <div class="col-md-3 col-lg-3 col-xl-2 d-flex align-items-center">
+                                <label class="me-2" for="form1">Adet:</label>
+                                <button [disabled]="basket.quantity<=1 " (click)="decrease(basket.basketItemId,basket.quantity)" data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="21" viewBox="0 0 448 512"><path fill="#e61919" d="M432 256c0 17.7-14.3 32-32 32L48 288c-17.7 0-32-14.3-32-32s14.3-32 32-32l352 0c17.7 0 32 14.3 32 32z"/></svg>
+                                </button>
+                                <input  style="width: 50px;" id="form1" min="0" name="quantity" [value]="basket.quantity" type="number" class="form-control form-control-sm" />
+                                <button (click)="increase(basket.basketItemId,basket.quantity)" data-mdb-button-init data-mdb-ripple-init class="btn btn-link px-2" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="24" width="21" viewBox="0 0 448 512"><path fill="#11b014" d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg>
+                                </button>
+                            </div>
+                            <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
+                                <h3 class="mb-0">{{basket.quantity * basket.price | currency:'₺'}}</h3>
+                            </div>
+                            <div class="col-md-1 col-lg-1 col-xl-1 text-end">
+                               <button (click)="removeItem(basket.basketItemId)" style="border: none;
+                               background-color: #fff;"><svg xmlns="http://www.w3.org/2000/svg" height="32" width="24" viewBox="0 0 384 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#db3c14" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-body p-4 d-flex flex-row">
+                        <div data-mdb-input-init class="form-outline flex-fill">
+                            <input type="text" id="form1" class="form-control form-control-lg" />
+                            <label class="form-label" for="form1">Discount code</label>
+                        </div>
+                        <button type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-warning btn-lg ms-3">Apply</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-body">
+                        <button routerLink="/basket/odeme" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-warning btn-block btn-lg">Sepeti Onayla</button>
+                    </div>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+</section>

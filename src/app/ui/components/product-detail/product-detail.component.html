@@ -1,0 +1,32 @@
+<div class="container" style="display: flex; padding: 20px;">
+    <div class="imageDiv" style="width: 50%; background-color: rgba(238, 239, 243, 0.813);">
+        <div id="carouselExample" class="carousel slide" style="height:100%; ">
+            <div class="carousel-inner" *ngIf="product">
+                <div class="carousel-item active" *ngFor="let image of product.productImageFiles"
+                    style="height: 70vh; overflow: hidden;">
+                    <img [src]="baseUrls + '/' + image" class="d-block w-100" alt="..."
+                        style="object-fit: contain; height: 100%;">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev"
+                style="top: 50%; transform: translateY(-50%); color: white; background-color: black; border-radius: 30px; height: 40px;">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next"
+                style="top: 50%; transform: translateY(-50%); color: white; background-color: black; border-radius: 30px; height: 40px;">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    <div class="contentDiv" style="width: 50%;background-color: rgba(247, 247, 247, 0.557);padding: 10px;" *ngIf="product">
+        <div style="margin-left: 50px">
+            <h2 style="font-size: 24px; margin-bottom: 20px;">{{product.name}}</h2>
+            <p style="font-size: 18px;margin-bottom: 20px">Fiyat: <span style="font-style: italic;">{{product.price | currency:'₺'}}</span></p>
+            <p style="font-size: 18px;margin-bottom: 20px">Stok Adedi: {{product.stock}}</p>
+            <p style="font-size: 14px;margin-bottom: 20px">MacBook Air, Apple'ın ince, hafif ve taşınabilir dizüstü bilgisayar serisidir. Şık tasarımı, yüksek çözünürlüklü Retina ekranı, güçlü işlemcisi ve uzun pil ömrüyle dikkat çeker. Güvenlik özellikleri ve çevre dostu tasarımıyla da öne çıkar. Kullanıcılar, mobilite ve performans arayanlar için MacBook Air'i tercih ederler.</p>
+            <button type="button" class="btn btn-success">Sepete Ekle</button>
+        </div>
+    </div>
+</div>

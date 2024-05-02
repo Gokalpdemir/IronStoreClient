@@ -39,6 +39,7 @@ import { HttpErrorHandlerInterceptorService } from './services/common/http-error
   providers: [
     provideAnimationsAsync(),
     { provide: 'baseUrl', useValue: 'https://localhost:7040/api', multi: true },
+    { provide: 'baseSignalRUrl', useValue: 'https://localhost:7040/', multi: true },
     {
       provide: "SocialAuthServiceConfig",
       useValue: {
