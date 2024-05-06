@@ -1,0 +1,46 @@
+<div class="mat-elevation-z8" style="box-shadow: none;">
+    <table mat-table [dataSource]="dataSource">
+
+
+
+        <ng-container matColumnDef="orderCode">
+            <th mat-header-cell *matHeaderCellDef> Order Code </th>
+            <td mat-cell *matCellDef="let element"> {{element.orderCode}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="userName">
+            <th mat-header-cell *matHeaderCellDef> User Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="totalPrice">
+            <th mat-header-cell *matHeaderCellDef>Total Price </th>
+            <td mat-cell *matCellDef="let element"> {{element.totalPrice | currency:'₺'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdDate">
+            <th mat-header-cell *matHeaderCellDef> Created Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.createdDate| date: 'dd/MM/yyyy'}} </td>
+        </ng-container>
+        <ng-container matColumnDef="viewDetail">
+            <th mat-header-cell *matHeaderCellDef> </th>
+            <td style="padding: 0;width: 50px;" mat-cell *matCellDef="let element"><svg (click)="showDetail(element.id)" style="cursor: pointer;" xmlns="http://www.w3.org/2000/svg" height="24" width="24" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM216 336h24V272H216c-13.3 0-24-10.7-24-24s10.7-24 24-24h48c13.3 0 24 10.7 24 24v88h8c13.3 0 24 10.7 24 24s-10.7 24-24 24H216c-13.3 0-24-10.7-24-24s10.7-24 24-24zm40-208a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/></svg> </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" appDelete (callback)="getOrders()" [id]="element.id"
+                controller="orders">
+                <!-- <img style="width: 35px; height: 35px;" src="../../../../../assets/delete.png" (click)="delete(element.id,$event)" >  </td> -->
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    <mat-paginator (page)="pageChanged()" [pageSizeOptions]="[5, 10,20]" showFirstLastButtons
+        aria-label="Select page of periodic elements">
+    </mat-paginator>
+</div>

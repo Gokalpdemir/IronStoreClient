@@ -1,10 +1,12 @@
 import {
-  FocusMonitor,
   MatCommonModule,
   MatRippleLoader,
-  MatRippleModule,
+  MatRippleModule
+} from "./chunk-YVM6CJEL.js";
+import {
+  FocusMonitor,
   Platform
-} from "./chunk-CCZYKPWX.js";
+} from "./chunk-O4OFPBYS.js";
 import {
   ANIMATION_MODULE_TYPE,
   ChangeDetectionStrategy,
@@ -1195,4 +1197,4 @@ export {
   MatIconAnchor,
   MatButtonModule
 };
-//# sourceMappingURL=chunk-VTYWCMUB.js.map
+//# sourceMappingURL=chunk-UKBB34KY.js.map

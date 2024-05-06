@@ -7,6 +7,8 @@ import { Update_Basket_Item } from '../../../contracts/basket/update-basket-ıte
 import { Create_basket_Items } from '../../../contracts/basket/create-basket-item';
 import { OrderService } from '../../../services/common/models/order.service';
 import { Create_order } from '../../../contracts/Order/create-order';
+import { DialogService } from '../../../services/common/dialog.service';
+import { BasketItemDeleteState, BasketItemRemoveDialogComponent } from '../../../dialogs/basket-item-remove-dialog/basket-item-remove-dialog.component';
 
 @Component({
   selector: 'app-baskets',
@@ -17,7 +19,8 @@ export class BasketsComponent extends BaseComponent implements OnInit {
   constructor(
     spinner: NgxSpinnerService,
     private basketService: BasketService,
-    private orderService:OrderService
+    private orderService:OrderService,
+    private dialogService:DialogService
   ) {
     super(spinner);
   }
@@ -40,9 +43,16 @@ export class BasketsComponent extends BaseComponent implements OnInit {
     this.listBasket();
   }
 
-  async removeItem(basketItemId: string) {
-    await this.basketService.remove(basketItemId);
-    this.listBasket();
+   removeItem(basketItemId: string) {
+    this.dialogService.openDialog({
+      componentType:BasketItemRemoveDialogComponent,
+      data:BasketItemDeleteState.Yes,
+      afterClosed:async ()=>{
+        await this.basketService.remove(basketItemId);
+        this.listBasket();
+      }
+    })
+    
   }
   async listBasket() {
     this.baskets = await this.basketService.get();

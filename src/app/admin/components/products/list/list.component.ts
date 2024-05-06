@@ -61,7 +61,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
         
        
     );
-    this.dataSource = new MatTableDataSource<List_Product>( allProductResponse.products);
+    this.dataSource = new MatTableDataSource<List_Product>(allProductResponse.products);
     this.paginator.length=allProductResponse.totalProductCount
     
   }
