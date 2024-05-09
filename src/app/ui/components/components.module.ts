@@ -7,6 +7,11 @@ import { RegisterComponent } from './register/register.component';
 import { RegisterModule } from './register/register.module';
 import { ProductDetailComponent } from './product-detail/product-detail.component';
 import { ProductDetailModule } from './product-detail/product-detail.module';
+import { PasswordResetModule } from './password-reset/password-reset.module';
+import { DenemeModule } from './deneme/deneme.module';
+import { UpdatePasswordModule } from './update-password/update-password.module';
+
+
 
 
 
@@ -15,6 +20,12 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
     
   
    
+  
+    
+  
+    
+  
+    
   ],
   imports: [
     CommonModule,
@@ -22,7 +33,10 @@ import { ProductDetailModule } from './product-detail/product-detail.module';
     BasketsModule,
     HomeModule,
     RegisterModule,
-    ProductDetailModule
+    ProductDetailModule,
+    PasswordResetModule,
+    UpdatePasswordModule
+   
   ],
 })
 export class ComponentsModule { }
