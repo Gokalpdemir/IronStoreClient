@@ -7,4 +7,5 @@ export class Order {
   userName: string;
   totalPrice: number;
   createdDate: Date;
+  isCompleted:boolean
 }

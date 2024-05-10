@@ -13,13 +13,15 @@ import { CompleateShoppingDialogComponent } from './compleate-shopping-dialog/co
 import { OrderDetailDialogComponent } from './order-detail-dialog/order-detail-dialog.component';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { CompleteOrderDialogComponent } from './complete-order-dialog/complete-order-dialog.component';
 @NgModule({
   declarations: [
     DeleteDialogComponent,
     SelectProductImageDialogsComponent,
     BasketItemRemoveDialogComponent,
     CompleateShoppingDialogComponent,
-    OrderDetailDialogComponent
+    OrderDetailDialogComponent,
+    CompleteOrderDialogComponent
   ],
   imports: [
     CommonModule,

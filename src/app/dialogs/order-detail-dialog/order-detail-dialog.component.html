@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Sipariş Detayı</h2>
-<mat-dialog-content>
+<mat-dialog-content *ngIf="order">
 
     <div>
         <mat-toolbar style="margin-bottom: 10px;">
@@ -49,5 +49,5 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-button (click)="close()">Kapat</button>
-    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Siparişi Tamamlama</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial  [disabled]="order.isCompleted" (click)="completeOrder(order.id)">Siparişi Tamamlama</button>
 </mat-dialog-actions>
