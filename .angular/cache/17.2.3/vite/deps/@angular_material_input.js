@@ -14,13 +14,13 @@ import {
   MatLabel,
   MatPrefix,
   MatSuffix
-} from "./chunk-ZVLTAXZ4.js";
+} from "./chunk-7TDJPRTW.js";
 import "./chunk-UEXN2CQF.js";
 import {
   ErrorStateMatcher,
   MatCommonModule,
   _ErrorStateTracker
-} from "./chunk-YVM6CJEL.js";
+} from "./chunk-EI2PEXC6.js";
 import {
   Platform,
   coerceBooleanProperty,
@@ -28,7 +28,8 @@ import {
   coerceNumberProperty,
   getSupportedInputTypes,
   normalizePassiveListenerOptions
-} from "./chunk-O4OFPBYS.js";
+} from "./chunk-G62W3IOE.js";
+import "./chunk-OW4MNTAO.js";
 import {
   DOCUMENT
 } from "./chunk-C5HAYDSJ.js";

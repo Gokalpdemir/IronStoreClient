@@ -54,7 +54,7 @@ export class DeleteDirective {
     this.httpClientService
       .delete({ contoller: this.controller }, this.id)
       .subscribe((data) => {
-        this.alertify.message("Ürün Silindi",{messageType:MessageType.Success,position:Position.TopRight,dismissOthers:true})
+        this.alertify.message(`${this.controller=='Roles' ? "Rol":"Ürün"} Silindi`,{messageType:MessageType.Success,position:Position.TopRight,dismissOthers:true})
         $(td.parentElement).fadeOut(1000, () => {         
           this.callback.emit(); // getProduct u tetikleyip tabloyu yeniden yükler
         });

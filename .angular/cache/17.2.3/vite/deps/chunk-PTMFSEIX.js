@@ -9,10 +9,9 @@ import {
   OverlayRef,
   PortalModule,
   TemplatePortal
-} from "./chunk-WS4ZCFWN.js";
+} from "./chunk-GS7JELZL.js";
 import {
   A11yModule,
-  Directionality,
   ESCAPE,
   FocusMonitor,
   FocusTrapFactory,
@@ -20,7 +19,10 @@ import {
   Platform,
   _getFocusedElementPierceShadowDom,
   hasModifierKey
-} from "./chunk-O4OFPBYS.js";
+} from "./chunk-G62W3IOE.js";
+import {
+  Directionality
+} from "./chunk-OW4MNTAO.js";
 import {
   DOCUMENT
 } from "./chunk-C5HAYDSJ.js";
@@ -827,4 +829,4 @@ export {
   Dialog,
   DialogModule
 };
-//# sourceMappingURL=chunk-6HMDMTMM.js.map
+//# sourceMappingURL=chunk-PTMFSEIX.js.map

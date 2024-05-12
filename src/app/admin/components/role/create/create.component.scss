@@ -1,0 +1,23 @@
+
+mat-form-field {
+    width: 100%; /* Genişliği tam ekran yap */
+    margin-bottom: 20px; /* Alanlar arasında bir boşluk bırak */
+  }
+  
+ 
+  .form-container {
+   justify-content: center;
+  background-color: #f5f5f5;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+@media(max-width:992px){
+  mat-form-field{
+    margin-bottom: 0px;
+  }
+  .form-container{
+    margin-bottom: 0px;
+  }
+}

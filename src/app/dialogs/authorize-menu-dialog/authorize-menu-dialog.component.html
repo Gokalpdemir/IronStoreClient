@@ -1,0 +1,14 @@
+<div style="position: relative;">
+  <h1 mat-dialog-title>{{data.name}} Endpointine Rol Atama</h1>
+<mat-dialog-content>
+  <p>ilgili işleme aşağıdan rol atayabilirsiniz.</p>
+  <div style="    position: absolute;
+  top: 35px;
+  right: 25px;
+" matBadge="4" matBadgeOverlap="false" class="demo-section"></div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">İptal</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Evet</button>
+</mat-dialog-actions>
+</div>

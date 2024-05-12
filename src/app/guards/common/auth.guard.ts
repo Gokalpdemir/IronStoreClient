@@ -13,6 +13,7 @@ import { _isAuthenticated } from '../../services/common/auth.service';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const token: string = localStorage.getItem('accessToken');
+  console.log(token)
   const jwtHelper: JwtHelperService = inject(JwtHelperService);
   const router: Router = inject(Router)
   const toastr:CustomToastrService=inject(CustomToastrService);
@@ -20,8 +21,8 @@ export const authGuard: CanActivateFn = (route, state) => {
    spinner.show(SpinnerType.SquareSpin);
  
   //   const tokenExpiration:Date= jwtHelper.getTokenExpirationDate(token);
-  //  const decodeToken =jwtHelper.decodeToken(token);
-  
+    const decodeToken =jwtHelper.decodeToken(token);
+   console.log(decodeToken)
 
 
   if (!_isAuthenticated) {

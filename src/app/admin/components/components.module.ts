@@ -5,18 +5,25 @@ import { CustomersModule } from './customers/customers.module';
 import { OrdersModule } from './orders/orders.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { RouterModule } from '@angular/router';
+import { AuthorizeMenuModule } from './authorize-menu/authorize-menu.module';
+import { RoleModule } from './role/role.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+   
+  ],
   imports: [
     CommonModule,
     CustomersModule,
     ProductsModule,
     OrdersModule,
     DashboardModule,
-    RouterModule
+    RouterModule,
+    AuthorizeMenuModule,
+    RoleModule
+
   ]
 })
 export class ComponentsModule { }
