@@ -37,4 +37,13 @@ export class RoleService {
     promiseData.then(value=>successCallBack()).catch(err=>errorCallBack(err))
     return await promiseData ;
    }
+
+   async getAllRoles():Promise<{roles:List_Role[]}>{
+     const observable:Observable<{roles:List_Role[]}>= this.httpClientService.get({
+      contoller:"Roles",
+      action:"GetrolesNotPaginate"
+     })
+
+     return await firstValueFrom(observable)
+   }
 }

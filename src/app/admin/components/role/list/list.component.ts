@@ -44,7 +44,7 @@ export class ListComponent extends BaseComponent implements OnInit {
       () => this.hideSpinner(SpinnerType.SquareSpin),
       () =>{ 
         this.hideSpinner(SpinnerType.SquareSpin),
-        this.aletifyService.message("Ürünler Listelenemedi", {
+        this.aletifyService.message("Roller Listelenemedi", {
         dismissOthers: true,
         messageType: MessageType.Error,
         position: Position.TopRight,

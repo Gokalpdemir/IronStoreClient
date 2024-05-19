@@ -14,6 +14,14 @@
       <mat-label>Price</mat-label>
       <input matInput type="number" min="0" value="0" #txtPrice>
     </mat-form-field>
-    <button mat-raised-button (click)="create(txtName,txtStock,txtPrice)">Create Product</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Category</mat-label>
+      <mat-select #categorySelect >
+        <mat-option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button (click)="create(txtName,txtStock,txtPrice,categorySelect.value)">Create Product</button>
 </div>
 

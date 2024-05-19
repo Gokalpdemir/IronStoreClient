@@ -42,6 +42,9 @@ export class LoginComponent extends BaseComponent {
       const returnUrl:string=params["returnUrl"];
       if(returnUrl){
           this.router.navigate([returnUrl]);
+      }else{
+        this.router.navigate(["/"]);
+
       }
     })
     this.hideSpinner(SpinnerType.BallSpinFade)

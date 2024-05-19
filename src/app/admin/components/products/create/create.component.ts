@@ -5,6 +5,8 @@ import { BaseComponent, SpinnerType } from '../../../../base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { AlertifyService, MessageType, Position } from '../../../../services/admin/alertify.service';
 import { FileUploadOptions } from '../../../../services/common/file-upload/file-upload.component';
+import { CategoryService } from '../../../../services/common/models/category.service';
+import { List_Category } from '../../../../contracts/Category/list-category';
 
 @Component({
   selector: 'app-create',
@@ -12,12 +14,16 @@ import { FileUploadOptions } from '../../../../services/common/file-upload/file-
   styleUrl: './create.component.scss'
 })
 export class CreateComponent extends BaseComponent implements OnInit {
-constructor(private productService:ProductService,spinner:NgxSpinnerService,private alertify:AlertifyService){
+constructor(private productService:ProductService,spinner:NgxSpinnerService,private alertify:AlertifyService,private categoryService:CategoryService){
   super(spinner)
 }
-ngOnInit(): void {
-  }
+categories: List_Category[] ;
 
+async ngOnInit() {
+   this.categories= await this.categoryService.listCategory();
+   console.log(this.categories)
+  }
+  
   @Output() createdProduct:EventEmitter<Create_Product>=new EventEmitter();
   @Output() fileUploadOptions:Partial< FileUploadOptions>={
     action:"upload",
@@ -27,12 +33,13 @@ ngOnInit(): void {
     accept:".jpg, .png, .jpeg "
     
   }
-create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement){
+create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement,category:any){
   this.showSpinner(SpinnerType.ballScaleMultiple)
    const create_product:Create_Product=new Create_Product();
    create_product.name=name.value;
    create_product.stock=parseInt(stock.value) ;
    create_product.price=parseFloat(price.value);
+   create_product.categoryId=category
    
    this.productService.create(create_product,()=>
    {this.hideSpinner(SpinnerType.ballScaleMultiple),
@@ -49,6 +56,7 @@ create(name:HTMLInputElement,stock:HTMLInputElement,price:HTMLInputElement){
       position:Position.TopRight
     })
     setTimeout(()=>{this.hideSpinner(SpinnerType.ballScaleMultiple)},1000)
+    console.log(create_product)
   })
 }
 }

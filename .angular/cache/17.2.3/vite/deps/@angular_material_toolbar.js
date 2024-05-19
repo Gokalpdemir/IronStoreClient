@@ -1,6 +1,6 @@
 import {
   MatCommonModule
-} from "./chunk-EI2PEXC6.js";
+} from "./chunk-MVQXICC6.js";
 import {
   Platform
 } from "./chunk-G62W3IOE.js";

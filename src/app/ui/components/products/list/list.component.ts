@@ -5,9 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { FileService } from '../../../../services/common/models/file.service';
 import { BaseComponent, SpinnerType } from '../../../../base/base.component';
 import { NgxSpinnerService } from 'ngx-spinner';
-import { CustomToastrService, ToastrMessageType, ToastrPosition } from '../../../../services/ui/custom-toastr.service';
+import {
+  CustomToastrService,
+  ToastrMessageType,
+  ToastrPosition,
+} from '../../../../services/ui/custom-toastr.service';
 import { BasketService } from '../../../../services/common/models/basket.service';
 import { Create_basket_Items } from '../../../../contracts/basket/create-basket-item';
+import { CategoryService } from '../../../../services/common/models/category.service';
+import { List_Category } from '../../../../contracts/Category/list-category';
 
 @Component({
   selector: 'app-list',
@@ -19,11 +25,12 @@ export class ListComponent extends BaseComponent implements OnInit {
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private fileService: FileService,
-    spinner:NgxSpinnerService,
-    private customToastrService:CustomToastrService,
-    private basketService:BasketService
+    spinner: NgxSpinnerService,
+    private customToastrService: CustomToastrService,
+    private basketService: BasketService,
+    private categoryService: CategoryService
   ) {
-    super(spinner)
+    super(spinner);
   }
 
   baseUrls: string = 'https://localhost:7040';
@@ -34,15 +41,22 @@ export class ListComponent extends BaseComponent implements OnInit {
   pageSize: number = 15;
   pageList: number[] = [];
 
-  list() {
+  list(
+    selectedCategory?: string,
+    selectedSort?: string,
+    minPrice?: string,
+    maxPrice?: string
+  ) {
     this.activatedRoute.params.subscribe(async (params) => {
       this.currentPageNo = parseInt(params['pageNo'] ?? 1);
       const data: { totalProductCount: number; products: List_Product[] } =
-        await this.productService.read(
+        await this.productService.getAllProduct(
           this.currentPageNo - 1,
           this.pageSize,
-          () => {},
-          (errorMessage) => {}
+          selectedCategory,
+          selectedSort,
+          minPrice,
+          maxPrice
         );
       this.products = data.products;
 
@@ -51,13 +65,14 @@ export class ListComponent extends BaseComponent implements OnInit {
           id: p.id,
           createdDate: p.createdDate,
           imagePath: p.productImageFiles?.length
-            ? p.productImageFiles.find((p) => p.showcase==true)?.path
+            ? p.productImageFiles.find((p) => p.showcase == true)?.path
             : '',
           name: p.name,
           price: p.price,
           stock: p.stock,
           updatedDate: p.updatedDate,
           productImageFiles: p.productImageFiles,
+          categoryName: p.categoryName,
         };
 
         return listProduct;
@@ -66,13 +81,16 @@ export class ListComponent extends BaseComponent implements OnInit {
       this.totalProductCount = data.totalProductCount;
       this.totalPageCount = Math.ceil(this.totalProductCount / this.pageSize);
       this.pageList = [];
-        
-      if(Math.ceil(this.totalProductCount/this.pageSize)<=6){
-        for (let i = 1; i <= Math.ceil(this.totalProductCount/this.pageSize); i++) {
+
+      if (Math.ceil(this.totalProductCount / this.pageSize) <= 6) {
+        for (
+          let i = 1;
+          i <= Math.ceil(this.totalProductCount / this.pageSize);
+          i++
+        ) {
           this.pageList.push(i);
         }
-      }
-      else if (this.currentPageNo - 3 <= 0) {
+      } else if (this.currentPageNo - 3 <= 0) {
         for (let i = 1; i <= 7; i++) {
           this.pageList.push(i);
         }
@@ -85,24 +103,37 @@ export class ListComponent extends BaseComponent implements OnInit {
           this.pageList.push(i);
         }
       }
-      
     });
-   
   }
-  
- async addToBasket(productId:string){
 
-  this.showSpinner(SpinnerType.BallSpinFade)
-    let _basketItem:Create_basket_Items=new Create_basket_Items();
-    _basketItem.productId=productId;
-    _basketItem.quantity=1
-    await this.basketService.add(_basketItem,()=>this.hideSpinner(SpinnerType.BallSpinFade));
-    this.customToastrService.message("Ürün sepete eklendi","İşlem Başarılı",{
-      messageType:ToastrMessageType.Success,
-      position:ToastrPosition.TopLeft
-    })
+  categories: List_Category[];
+
+  applyFilters(
+    selectedCategory: string,
+    selectedSort: string,
+    minPrice: string,
+    maxPrice: string
+  ): void {
+    console.log(selectedCategory, selectedSort, minPrice, maxPrice);
+    this.list(selectedCategory, selectedSort, minPrice, maxPrice);
+  }
+
+  async addToBasket(productId: string) {
+    this.showSpinner(SpinnerType.BallSpinFade);
+    let _basketItem: Create_basket_Items = new Create_basket_Items();
+    _basketItem.productId = productId;
+    _basketItem.quantity = 1;
+    await this.basketService.add(_basketItem, () =>
+      this.hideSpinner(SpinnerType.BallSpinFade)
+    );
+    this.customToastrService.message('Ürün sepete eklendi', 'İşlem Başarılı', {
+      messageType: ToastrMessageType.Success,
+      position: ToastrPosition.TopLeft,
+    });
   }
   async ngOnInit() {
     this.list();
+    this.categories = await this.categoryService.listCategory();
+   
   }
 }

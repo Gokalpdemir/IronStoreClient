@@ -1,14 +1,22 @@
-<div style="position: relative;">
+<div style="position: relative;" *ngIf="roles">
   <h1 mat-dialog-title>{{data.name}} Endpointine Rol Atama</h1>
-<mat-dialog-content>
-  <p>ilgili işleme aşağıdan rol atayabilirsiniz.</p>
-  <div style="    position: absolute;
+  <mat-dialog-content>
+    <p>ilgili işleme aşağıdan rol atayabilirsiniz.</p>
+    <div style="    position: absolute;
   top: 35px;
   right: 25px;
-" matBadge="4" matBadgeOverlap="false" class="demo-section"></div>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button (click)="close()">İptal</button>
-  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Evet</button>
-</mat-dialog-actions>
+" matBadge="{{Roles.selectedOptions.selected.length}}/{{roles.roles.length}}" matBadgeOverlap="false" class="demo-section"></div>
+    <mat-selection-list #Roles>
+    
+      <mat-list-option *ngFor="let role of roles.roles" [selected]="endpointRoles?.roles?.includes(role.name)">
+        {{role.name}}
+      </mat-list-option>
+    
+    </mat-selection-list>
+
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="close()">İptal</button>
+    <button mat-button [mat-dialog-close]="data" (click)="assignRoles(Roles)" cdkFocusInitial>Rolleri Ata</button>
+  </mat-dialog-actions>
 </div>

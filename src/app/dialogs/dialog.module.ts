@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 import { CompleteOrderDialogComponent } from './complete-order-dialog/complete-order-dialog.component';
 import { AuthorizeMenuDialogComponent } from './authorize-menu-dialog/authorize-menu-dialog.component';
 import {MatBadgeModule} from '@angular/material/badge';
+import {MatListModule} from '@angular/material/list';
+import { AuthorizeUserDialogComponent } from './authorize-user-dialog/authorize-user-dialog.component';
 @NgModule({
   declarations: [
     DeleteDialogComponent,
@@ -24,7 +26,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     CompleateShoppingDialogComponent,
     OrderDetailDialogComponent,
     CompleteOrderDialogComponent,
-    AuthorizeMenuDialogComponent
+    AuthorizeMenuDialogComponent,
+    AuthorizeUserDialogComponent
   ],
   imports: [
     CommonModule,
@@ -35,7 +38,8 @@ import {MatBadgeModule} from '@angular/material/badge';
     FormsModule,
     MatTableModule,
     MatToolbarModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatListModule
     
   ],
   

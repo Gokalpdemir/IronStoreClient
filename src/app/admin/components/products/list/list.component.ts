@@ -35,6 +35,7 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
     'name',
     'stock',
     'price',
+    'categoryName',
     'createdDate',
     'updatedDate',
     'photos',
@@ -58,11 +59,10 @@ export class ListComponent extends BaseComponent implements OnInit,AfterViewInit
         messageType: MessageType.Error,
         position: Position.TopRight,
       })}
-        
-       
     );
     this.dataSource = new MatTableDataSource<List_Product>(allProductResponse.products);
     this.paginator.length=allProductResponse.totalProductCount
+    console.log(allProductResponse)
     
   }
 

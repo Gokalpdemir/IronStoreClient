@@ -15,6 +15,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import { DialogModule } from '../../../dialogs/dialog.module';
 import { FileUploadModule } from '../../../services/common/file-upload/file-upload.module';
 import { DeleteModule } from '../../../directives/admin/delete.module';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     ProductsComponent,
@@ -38,7 +39,8 @@ import { DeleteModule } from '../../../directives/admin/delete.module';
     MatDialogModule,
     DialogModule,
     FileUploadModule,
-    DeleteModule
+    DeleteModule,
+    MatSelectModule
    
   ]
 })

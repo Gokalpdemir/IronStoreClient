@@ -36,7 +36,8 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
       catchError((error) => {
         switch (error.status) {
           case HttpStatusCode.Unauthorized:
-
+            this.spinner.hide(SpinnerType.SquareSpin)
+            
           this.userAuthService.refreshTokenLogin(localStorage.getItem("refreshToken"), (state) => {
             if (!state) {
               const url = this.router.url;
@@ -56,7 +57,9 @@ export class HttpErrorHandlerInterceptorService implements HttpInterceptor {
               messageType: ToastrMessageType.Warning,
               position: ToastrPosition.BottomFullWidth
             });
+            this.spinner.hide(SpinnerType.SquareSpin)
           });
+            
           break;
           case HttpStatusCode.InternalServerError:
             this.toastrService.message(

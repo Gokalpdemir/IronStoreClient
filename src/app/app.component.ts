@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+
 import {
   CustomToastrService,
   ToastrMessageType,
@@ -8,6 +8,8 @@ import {
 import { AuthService } from './services/common/auth.service';
 import { Router } from '@angular/router';
 import { HttpClientService } from './services/common/http-client.service';
+import { UserService } from './services/common/models/user.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
 declare var $: any;
 
 @Component({
@@ -20,7 +22,8 @@ export class AppComponent implements OnInit {
     public authService: AuthService,
     private router: Router,
     private toast: CustomToastrService,
-    private httpClientService:HttpClientService
+    private httpClientService:HttpClientService,
+    private userService:UserService,private jwtHelper:JwtHelperService 
   ) {
     // httpClientService.get({
     //   contoller:"Baskets",
@@ -31,7 +34,7 @@ export class AppComponent implements OnInit {
       
     // ).subscribe(data=> console.log(data))
 
-
+  
     authService.identityCheck();
   }
 
@@ -45,4 +48,8 @@ export class AppComponent implements OnInit {
       position: ToastrPosition.TopRight,
     });
   }
+
+
+  
+    
 }

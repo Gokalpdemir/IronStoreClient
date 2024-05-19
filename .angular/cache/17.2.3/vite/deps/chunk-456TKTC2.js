@@ -7,7 +7,7 @@ import {
 } from "./chunk-UEXN2CQF.js";
 import {
   MatCommonModule
-} from "./chunk-EI2PEXC6.js";
+} from "./chunk-MVQXICC6.js";
 import {
   ObserversModule,
   Platform,
@@ -1585,4 +1585,4 @@ export {
   MatFormField,
   MatFormFieldModule
 };
-//# sourceMappingURL=chunk-7TDJPRTW.js.map
+//# sourceMappingURL=chunk-456TKTC2.js.map

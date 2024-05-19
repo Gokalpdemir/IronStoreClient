@@ -45,11 +45,11 @@ export class ListComponent extends BaseComponent implements OnInit{
   dataSource: MatTableDataSource<List_Order> = null;
   @ViewChild(MatPaginator) paginator: MatPaginator;
    async getOrders(){
-    this.showSpinner(SpinnerType.SquareSpin);
+    this.showSpinner(SpinnerType.BallSpinFade);
     const allOrderResponse:{totalOrderCount:number,orders:List_Order[]} = await this.orderService.getAllOrder(
       this.paginator?this.paginator.pageIndex:0,
       this.paginator?this.paginator.pageSize:5,
-      ()=>this.hideSpinner(SpinnerType.SquareSpin)
+      ()=>this.hideSpinner(SpinnerType.BallSpinFade)
     )
    
     this.dataSource = new MatTableDataSource<List_Order>(allOrderResponse.orders);

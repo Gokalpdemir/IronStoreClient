@@ -138,4 +138,29 @@ export class ProductService {
     await firstValueFrom(selectShowCaseImageObservable);
     successCallBack();
   }
+
+  async getAllProduct(
+    page: number = 0,
+    size: number = 5,
+    selectedCategory?: string,
+    selectedSort?: string,
+    minPrice?: string,
+    maxPrice?: string
+  ): Promise<{ totalProductCount: number; products: List_Product[] }> {
+    const observable: Observable<any> =  this.httpClientService.post(
+      {
+        contoller: 'Products',
+        action: 'GetFilter',
+      },
+      {
+        page: page,
+        size: size,
+        category: selectedCategory,
+        sortOrder: selectedSort,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+      }
+    );
+    return await firstValueFrom(observable);
+  }
 }
